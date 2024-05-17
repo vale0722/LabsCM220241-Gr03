@@ -58,6 +58,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -66,6 +67,7 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.Posture
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
@@ -389,7 +391,9 @@ private fun HomeAppBar(
             query = "",
             onQueryChange = {},
             placeholder = {
-                Text(stringResource(id = R.string.search_for_a_podcast))
+                Text(
+                    stringResource(id = R.string.search_for_a_podcast),
+                )
             },
             onSearch = {},
             active = false,
@@ -435,7 +439,6 @@ private fun HomeScreen(
     showGrid: Boolean,
     modifier: Modifier = Modifier
 ) {
-    // Effect that changes the home category selection when there are no subscribed podcasts
     LaunchedEffect(key1 = homeState.featuredPodcasts) {
         if (homeState.featuredPodcasts.isEmpty()) {
             homeState.onHomeCategorySelected(HomeCategory.Discover)
@@ -517,11 +520,6 @@ private fun HomeContent(
                 onLibraryPodcastSelected(podcast)
             }
     }
-
-    // Note: ideally, `HomeContentColumn` and `HomeContentGrid` would be the same implementation
-    // (i.e. a grid). However, LazyVerticalGrid does not have the concept of a sticky header.
-    // So we are using two different composables here depending on the provided window size class.
-    // See: https://issuetracker.google.com/issues/231557184
     if (showGrid) {
         HomeContentGrid(
             pagerState = pagerState,
@@ -802,11 +800,6 @@ private fun FollowedPodcasts(
     navigateToPodcastDetails: (PodcastInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // TODO: Using BoxWithConstraints is not quite performant since it requires 2 passes to compute
-    // the content padding. This should be revisited once a carousel component is available.
-    // Alternatively, version 1.7.0-alpha05 of Compose Foundation supports `snapPosition`
-    // which solves this problem and avoids this calculation altogether. Once 1.7.0 is
-    // stable, this implementation can be updated.
     BoxWithConstraints(
         modifier = modifier.background(Color.Transparent)
     ) {

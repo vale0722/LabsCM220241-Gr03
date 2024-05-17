@@ -31,10 +31,10 @@ import com.example.jetcaster.core.data.database.dao.PodcastsDao
 import com.example.jetcaster.core.data.database.dao.TransactionRunner
 import com.example.jetcaster.core.data.repository.CategoryStore
 import com.example.jetcaster.core.data.repository.EpisodeStore
-import com.example.jetcaster.core.data.repository.LocalCategoryStore
 import com.example.jetcaster.core.data.repository.LocalEpisodeStore
 import com.example.jetcaster.core.data.repository.LocalPodcastStore
 import com.example.jetcaster.core.data.repository.PodcastStore
+import com.example.jetcaster.core.data.repository.RemoteCategoryStore
 import com.rometools.rome.io.SyndFeedInput
 import dagger.Module
 import dagger.Provides
@@ -154,15 +154,5 @@ object DataDiModule {
 
     @Provides
     @Singleton
-    fun provideCategoryStore(
-        categoriesDao: CategoriesDao,
-        podcastCategoryEntryDao: PodcastCategoryEntryDao,
-        podcastDao: PodcastsDao,
-        episodeDao: EpisodesDao,
-    ): CategoryStore = LocalCategoryStore(
-        episodesDao = episodeDao,
-        podcastsDao = podcastDao,
-        categoriesDao = categoriesDao,
-        categoryEntryDao = podcastCategoryEntryDao,
-    )
+    fun provideCategoryStore(): CategoryStore = RemoteCategoryStore()
 }

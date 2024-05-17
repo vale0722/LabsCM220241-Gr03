@@ -1,31 +1,15 @@
-/*
- * Copyright 2024 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.jetcaster.designsystem.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF885200)
+val primaryLight = Color(0xFF03A9F4)
 val onPrimaryLight = Color(0xFFFFFFFF)
-val primaryContainerLight = Color(0xFFFFAC46)
-val onPrimaryContainerLight = Color(0xFF482900)
-val secondaryLight = Color(0xFF7A5817)
+val primaryContainerLight = Color(0xFF000000)
+val onPrimaryContainerLight = Color(0xFF001A48)
+val secondaryLight = Color(0xFF7CC0F7)
 val onSecondaryLight = Color(0xFFFFFFFF)
-val secondaryContainerLight = Color(0xFFFFD798)
-val onSecondaryContainerLight = Color(0xFF5C3F00)
-val tertiaryLight = Color(0xFF994700)
+val secondaryContainerLight = Color(0xFF2196F3)
+val onSecondaryContainerLight = Color(0xFFFFFFFF)
+val tertiaryLight = Color(0xFF114874)
 val onTertiaryLight = Color(0xFFFFFFFF)
 val tertiaryContainerLight = Color(0xFFFF801F)
 val onTertiaryContainerLight = Color(0xFF2D1000)
@@ -33,25 +17,25 @@ val errorLight = Color(0xFFA4384A)
 val onErrorLight = Color(0xFFFFFFFF)
 val errorContainerLight = Color(0xFFF87889)
 val onErrorContainerLight = Color(0xFF32000A)
-val backgroundLight = Color(0xFFFFF8F4)
+val backgroundLight = Color(0xFF000000)
 val onBackgroundLight = Color(0xFF221A11)
-val surfaceLight = Color(0xFFFFF8F4)
-val onSurfaceLight = Color(0xFF221A11)
-val surfaceVariantLight = Color(0xFFF7DEC8)
-val onSurfaceVariantLight = Color(0xFF544434)
+val surfaceLight = Color(0xFF383838)
+val onSurfaceLight = Color(0xFFFFFFFF)
+val surfaceVariantLight = Color(0xFF222222)
+val onSurfaceVariantLight = Color(0xFFFFFFFF)
 val outlineLight = Color(0xFF877461)
 val outlineVariantLight = Color(0xFFDAC3AD)
 val scrimLight = Color(0xFF000000)
 val inverseSurfaceLight = Color(0xFF382F25)
-val inverseOnSurfaceLight = Color(0xFFFFEEDF)
-val inversePrimaryLight = Color(0xFFFFB868)
-val surfaceDimLight = Color(0xFFE8D7C9)
-val surfaceBrightLight = Color(0xFFFFF8F4)
+val inverseOnSurfaceLight = Color(0xFF000000)
+val inversePrimaryLight = Color(0xFF2196F3)
+val surfaceDimLight = Color(0xFF01415E)
+val surfaceBrightLight = Color(0xFF0B1218)
 val surfaceContainerLowestLight = Color(0xFFFFFFFF)
 val surfaceContainerLowLight = Color(0xFFFFF1E6)
-val surfaceContainerLight = Color(0xFFFCEBDC)
-val surfaceContainerHighLight = Color(0xFFF6E5D7)
-val surfaceContainerHighestLight = Color(0xFFF1E0D1)
+val surfaceContainerLight = Color(0xFF2B2B2B)
+val surfaceContainerHighLight = Color(0xFF424242)
+val surfaceContainerHighestLight = Color(0xFF505050)
 
 val primaryLightMediumContrast = Color(0xFF623A00)
 val onPrimaryLightMediumContrast = Color(0xFFFFFFFF)

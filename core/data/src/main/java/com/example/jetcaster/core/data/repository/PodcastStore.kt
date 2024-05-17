@@ -16,6 +16,7 @@
 
 package com.example.jetcaster.core.data.repository
 
+import android.util.Log
 import com.example.jetcaster.core.data.database.dao.PodcastFollowedEntryDao
 import com.example.jetcaster.core.data.database.dao.PodcastsDao
 import com.example.jetcaster.core.data.database.dao.TransactionRunner
@@ -88,41 +89,26 @@ interface PodcastStore {
     suspend fun isEmpty(): Boolean
 }
 
-/**
- * A data repository for [Podcast] instances.
- */
+
 class LocalPodcastStore constructor(
     private val podcastDao: PodcastsDao,
     private val podcastFollowedEntryDao: PodcastFollowedEntryDao,
     private val transactionRunner: TransactionRunner
 ) : PodcastStore {
-    /**
-     * Return a flow containing the [Podcast] with the given [uri].
-     */
     override fun podcastWithUri(uri: String): Flow<Podcast> {
+        Log.i("asaassa", podcastDao.podcastWithUri(uri).toString())
         return podcastDao.podcastWithUri(uri)
     }
 
-    /**
-     * Return a flow containing the [PodcastWithExtraInfo] with the given [podcastUri].
-     */
     override fun podcastWithExtraInfo(podcastUri: String): Flow<PodcastWithExtraInfo> =
         podcastDao.podcastWithExtraInfo(podcastUri)
 
-    /**
-     * Returns a flow containing the entire collection of podcasts, sorted by the last episode
-     * publish date for each podcast.
-     */
     override fun podcastsSortedByLastEpisode(
         limit: Int
     ): Flow<List<PodcastWithExtraInfo>> {
         return podcastDao.podcastsSortedByLastEpisode(limit)
     }
 
-    /**
-     * Returns a flow containing a list of all followed podcasts, sorted by the their last
-     * episode date.
-     */
     override fun followedPodcastsSortedByLastEpisode(
         limit: Int
     ): Flow<List<PodcastWithExtraInfo>> {

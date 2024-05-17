@@ -59,17 +59,11 @@ class HomeViewModel @Inject constructor(
     private val filterableCategoriesUseCase: FilterableCategoriesUseCase,
     private val episodePlayer: EpisodePlayer,
 ) : ViewModel() {
-    // Holds our currently selected podcast in the library
     private val selectedLibraryPodcast = MutableStateFlow<PodcastInfo?>(null)
-    // Holds our currently selected home category
     private val selectedHomeCategory = MutableStateFlow(HomeCategory.Discover)
-    // Holds the currently available home categories
     private val homeCategories = MutableStateFlow(HomeCategory.entries)
-    // Holds our currently selected category
     private val _selectedCategory = MutableStateFlow<CategoryInfo?>(null)
-    // Holds our view state which the UI collects via [state]
     private val _state = MutableStateFlow<HomeScreenUiState>(HomeScreenUiState.Loading)
-    // Holds the view state if the UI is refreshing for new data
     private val refreshing = MutableStateFlow(false)
 
     private val subscribedPodcasts = podcastStore.followedPodcastsSortedByLastEpisode(limit = 10)
@@ -80,8 +74,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            // Combines the latest value from each of the flows, allowing us to generate a
-            // view state instance which only contains the latest values.
             com.example.jetcaster.core.util.combine(
                 homeCategories,
                 selectedHomeCategory,
@@ -128,6 +120,8 @@ class HomeViewModel @Inject constructor(
                     library = libraryEpisodes.asLibrary()
                 )
             }.catch { throwable ->
+                Log.e("ERROR_JETCASTER", throwable.message.toString())
+                Log.e("ERROR_JETCASTER", throwable.stackTraceToString())
                 _state.value = HomeScreenUiState.Error(throwable.message)
             }.collect {
                 _state.value = it

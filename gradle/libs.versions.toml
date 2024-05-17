@@ -4,7 +4,7 @@
 #####
 [versions]
 accompanist = "0.34.0"
-androidGradlePlugin = "8.2.2"
+androidGradlePlugin = "8.4.0"
 androidx-activity-compose = "1.9.0"
 androidx-appcompat = "1.6.1"
 androidx-benchmark = "1.2.4"
@@ -59,6 +59,7 @@ secrets = "2.0.1"
 # @keep
 targetSdk = "33"
 version-catalog-update = "0.8.4"
+coreI18n = "1.0.0-alpha01"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -167,6 +168,7 @@ rometools-rome = { module = "com.rometools:rome", version.ref = "rome" }
 wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "androidx-wear-compose" }
 wear-compose-material = { module = "androidx.wear.compose:compose-material", version.ref = "androidx-wear-compose" }
 wear-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "androidx-wear-compose" }
+androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
