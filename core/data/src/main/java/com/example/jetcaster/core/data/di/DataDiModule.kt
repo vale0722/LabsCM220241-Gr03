@@ -31,10 +31,10 @@ import com.example.jetcaster.core.data.database.dao.PodcastsDao
 import com.example.jetcaster.core.data.database.dao.TransactionRunner
 import com.example.jetcaster.core.data.repository.CategoryStore
 import com.example.jetcaster.core.data.repository.EpisodeStore
-import com.example.jetcaster.core.data.repository.LocalCategoryStore
-import com.example.jetcaster.core.data.repository.LocalEpisodeStore
-import com.example.jetcaster.core.data.repository.LocalPodcastStore
 import com.example.jetcaster.core.data.repository.PodcastStore
+import com.example.jetcaster.core.data.repository.RemoteCategoryStore
+import com.example.jetcaster.core.data.repository.RemoteEpisodeStore
+import com.example.jetcaster.core.data.repository.RemotePodcastStore
 import com.rometools.rome.io.SyndFeedInput
 import dagger.Module
 import dagger.Provides
@@ -136,33 +136,13 @@ object DataDiModule {
 
     @Provides
     @Singleton
-    fun provideEpisodeStore(
-        episodeDao: EpisodesDao
-    ): EpisodeStore = LocalEpisodeStore(episodeDao)
+    fun provideEpisodeStore(): EpisodeStore = RemoteEpisodeStore()
 
     @Provides
     @Singleton
-    fun providePodcastStore(
-        podcastDao: PodcastsDao,
-        podcastFollowedEntryDao: PodcastFollowedEntryDao,
-        transactionRunner: TransactionRunner,
-    ): PodcastStore = LocalPodcastStore(
-        podcastDao = podcastDao,
-        podcastFollowedEntryDao = podcastFollowedEntryDao,
-        transactionRunner = transactionRunner
-    )
+    fun providePodcastStore(): PodcastStore = RemotePodcastStore()
 
     @Provides
     @Singleton
-    fun provideCategoryStore(
-        categoriesDao: CategoriesDao,
-        podcastCategoryEntryDao: PodcastCategoryEntryDao,
-        podcastDao: PodcastsDao,
-        episodeDao: EpisodesDao,
-    ): CategoryStore = LocalCategoryStore(
-        episodesDao = episodeDao,
-        podcastsDao = podcastDao,
-        categoriesDao = categoriesDao,
-        categoryEntryDao = podcastCategoryEntryDao,
-    )
+    fun provideCategoryStore(): CategoryStore = RemoteCategoryStore()
 }

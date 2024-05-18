@@ -40,6 +40,7 @@ dependencies {
 
     // Image loading
     implementation(libs.coil.kt.compose)
+    implementation(libs.androidx.core.i18n)
 
     // Compose
     val composeBom = platform(libs.androidx.compose.bom)
@@ -61,10 +62,16 @@ dependencies {
 
     implementation(libs.rometools.rome)
     implementation(libs.rometools.modules)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.media:media:1.7.0")
+
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
 
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+
 }

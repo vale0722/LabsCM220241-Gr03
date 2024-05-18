@@ -23,9 +23,6 @@ import com.example.jetcaster.core.data.database.model.Podcast
 import com.example.jetcaster.core.data.database.model.PodcastWithExtraInfo
 import kotlinx.coroutines.flow.Flow
 
-/**
- * [Room] DAO for [Podcast] related operations.
- */
 @Dao
 abstract class PodcastsDao : BaseDao<Podcast> {
     @Query("SELECT * FROM podcasts WHERE uri = :uri")

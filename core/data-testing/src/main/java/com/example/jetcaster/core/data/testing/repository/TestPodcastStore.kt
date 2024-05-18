@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
-// TODO: Move to :testing module upon merging PR #1379
 class TestPodcastStore : PodcastStore {
 
     private val podcastFlow = MutableStateFlow<List<Podcast>>(listOf())
