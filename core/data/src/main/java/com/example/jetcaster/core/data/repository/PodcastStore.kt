@@ -17,6 +17,9 @@
 package com.example.jetcaster.core.data.repository
 
 import android.util.Log
+import com.example.jetcaster.core.data.api.EpisodeApi
+import com.example.jetcaster.core.data.api.PodcastApi
+import com.example.jetcaster.core.data.api.RetrofitClient
 import com.example.jetcaster.core.data.database.dao.PodcastFollowedEntryDao
 import com.example.jetcaster.core.data.database.dao.PodcastsDao
 import com.example.jetcaster.core.data.database.dao.TransactionRunner
@@ -25,6 +28,7 @@ import com.example.jetcaster.core.data.database.model.Podcast
 import com.example.jetcaster.core.data.database.model.PodcastFollowedEntry
 import com.example.jetcaster.core.data.database.model.PodcastWithExtraInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface PodcastStore {
     /**
@@ -89,72 +93,85 @@ interface PodcastStore {
     suspend fun isEmpty(): Boolean
 }
 
+class RemotePodcastStore constructor() : PodcastStore {
+    private val podcastApi: PodcastApi = RetrofitClient.retrofit.create(PodcastApi::class.java)
 
-class LocalPodcastStore constructor(
-    private val podcastDao: PodcastsDao,
-    private val podcastFollowedEntryDao: PodcastFollowedEntryDao,
-    private val transactionRunner: TransactionRunner
-) : PodcastStore {
-    override fun podcastWithUri(uri: String): Flow<Podcast> {
-        Log.i("asaassa", podcastDao.podcastWithUri(uri).toString())
-        return podcastDao.podcastWithUri(uri)
+    override fun podcastWithUri(uri: String): Flow<Podcast> = flow {
+        val response = podcastApi.podcastWithUri(uri)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+            Log.d("PODCAST", response.message())
+        }
     }
 
-    override fun podcastWithExtraInfo(podcastUri: String): Flow<PodcastWithExtraInfo> =
-        podcastDao.podcastWithExtraInfo(podcastUri)
+    override fun podcastWithExtraInfo(podcastUri: String): Flow<PodcastWithExtraInfo> = flow {
+        val response = podcastApi.podcastWithExtraInfo(podcastUri)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+            Log.d("PODCAST", response.message())
+        }
+    }
 
     override fun podcastsSortedByLastEpisode(
         limit: Int
-    ): Flow<List<PodcastWithExtraInfo>> {
-        return podcastDao.podcastsSortedByLastEpisode(limit)
+    ): Flow<List<PodcastWithExtraInfo>> = flow {
+        val response = podcastApi.podcastsSortedByLastEpisode(limit)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+            Log.d("PODCAST", response.message())
+        }
     }
 
     override fun followedPodcastsSortedByLastEpisode(
         limit: Int
-    ): Flow<List<PodcastWithExtraInfo>> {
-        return podcastDao.followedPodcastsSortedByLastEpisode(limit)
+    ): Flow<List<PodcastWithExtraInfo>> = flow {
+        val response = podcastApi.podcastsSortedByLastEpisode(limit)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+            Log.d("PODCAST", response.message())
+        }
     }
 
     override fun searchPodcastByTitle(
         keyword: String,
         limit: Int
-    ): Flow<List<PodcastWithExtraInfo>> {
-        return podcastDao.searchPodcastByTitle(keyword, limit)
+    ): Flow<List<PodcastWithExtraInfo>> = flow {
+        val response = podcastApi.podcastsSortedByLastEpisode(limit)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+            Log.d("PODCAST", response.message())
+        }
     }
 
     override fun searchPodcastByTitleAndCategories(
         keyword: String,
         categories: List<Category>,
         limit: Int
-    ): Flow<List<PodcastWithExtraInfo>> {
-        val categoryIdList = categories.map { it.id }
-        return podcastDao.searchPodcastByTitleAndCategory(keyword, categoryIdList, limit)
-    }
-
-    override suspend fun followPodcast(podcastUri: String) {
-        podcastFollowedEntryDao.insert(PodcastFollowedEntry(podcastUri = podcastUri))
-    }
-
-    override suspend fun togglePodcastFollowed(podcastUri: String) = transactionRunner {
-        if (podcastFollowedEntryDao.isPodcastFollowed(podcastUri)) {
-            unfollowPodcast(podcastUri)
+    ): Flow<List<PodcastWithExtraInfo>> = flow {
+        val response = podcastApi.podcastsSortedByLastEpisode(limit)
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
         } else {
-            followPodcast(podcastUri)
+            Log.d("PODCAST", response.message())
         }
     }
 
+    override suspend fun followPodcast(podcastUri: String) {
+    }
+
+    override suspend fun togglePodcastFollowed(podcastUri: String) {
+    }
+
     override suspend fun unfollowPodcast(podcastUri: String) {
-        podcastFollowedEntryDao.deleteWithPodcastUri(podcastUri)
     }
 
-    /**
-     * Add a new [Podcast] to this store.
-     *
-     * This automatically switches to the main thread to maintain thread consistency.
-     */
     override suspend fun addPodcast(podcast: Podcast) {
-        podcastDao.insert(podcast)
     }
 
-    override suspend fun isEmpty(): Boolean = podcastDao.count() == 0
+    override suspend fun isEmpty(): Boolean = false
 }

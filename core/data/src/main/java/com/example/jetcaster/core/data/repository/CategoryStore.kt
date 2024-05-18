@@ -48,7 +48,7 @@ class RemoteCategoryStore : CategoryStore {
         limit: Int
     ): Flow<List<PodcastWithExtraInfo>> = flow {
         try {
-            val response = categoryApi.getPodcastsInCategorySortedByPodcastCount(categoryId, limit)
+            val response = categoryApi.getPodcastsInCategorySortedByPodcastCount(limit)
             if (response.isSuccessful) {
                 response.body()?.let { emit(it) }
             } else {
@@ -63,7 +63,7 @@ class RemoteCategoryStore : CategoryStore {
         categoryId: Long,
         limit: Int
     ): Flow<List<EpisodeToPodcast>> = flow {
-        val response = categoryApi.getEpisodesFromPodcastsInCategory(categoryId, limit)
+        val response = categoryApi.getEpisodesFromPodcastsInCategory(limit)
         if (response.isSuccessful) {
             response.body()?.let { emit(it) }
         } else {
@@ -82,7 +82,7 @@ class RemoteCategoryStore : CategoryStore {
     }
 
     override suspend fun addPodcastToCategory(podcastUri: String, categoryId: Long) {
-        val response = categoryApi.addPodcastToCategory(categoryId, podcastUri)
+        val response = categoryApi.addPodcastToCategory(podcastUri)
         if (!response.isSuccessful) {
             Log.d("CATEGORIES", response.message())
         }

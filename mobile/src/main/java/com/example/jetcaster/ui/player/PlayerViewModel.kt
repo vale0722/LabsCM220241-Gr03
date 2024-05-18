@@ -16,6 +16,7 @@
 
 package com.example.jetcaster.ui.player
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,11 +25,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.example.jetcaster.core.data.worker.playAudio
+import com.example.jetcaster.core.data.worker.stopAudio
 import com.example.jetcaster.core.player.EpisodePlayer
 import com.example.jetcaster.core.player.EpisodePlayerState
 import com.example.jetcaster.core.player.model.toPlayerEpisode
 import com.example.jetcaster.ui.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Duration
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -48,7 +52,8 @@ data class PlayerUiState(
 class PlayerViewModel @Inject constructor(
     episodeStore: EpisodeStore,
     private val episodePlayer: EpisodePlayer,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     // episodeUri should always be present in the PlayerViewModel.
@@ -73,14 +78,17 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun onPlay() {
+        playAudio(context, "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
         episodePlayer.play()
     }
 
     fun onPause() {
+        stopAudio(context)
         episodePlayer.pause()
     }
 
     fun onStop() {
+        stopAudio(context)
         episodePlayer.stop()
     }
 

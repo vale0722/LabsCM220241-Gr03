@@ -12,24 +12,21 @@ interface CategoryApi {
         @Query("limit") limit: Int
     ): Response<List<Category>>
 
-    @GET("categories/{categoryId}/podcasts")
+    @GET("categories/1/podcasts")
     suspend fun getPodcastsInCategorySortedByPodcastCount(
-        @Path("categoryId") categoryId: Long,
         @Query("limit") limit: Int
     ): Response<List<PodcastWithExtraInfo>>
 
-    @GET("categories/{categoryId}/episodes")
+    @GET("categories/1/episodes")
     suspend fun getEpisodesFromPodcastsInCategory(
-        @Path("categoryId") categoryId: Long,
         @Query("limit") limit: Int
     ): Response<List<EpisodeToPodcast>>
 
     @POST("categories")
     suspend fun addCategory(@Body category: Category): Response<Long>
 
-    @POST("categories/{categoryId}/podcasts")
+    @POST("categories/1/podcasts")
     suspend fun addPodcastToCategory(
-        @Path("categoryId") categoryId: Long,
         @Body podcastUri: String
     ): Response<Void>
 
